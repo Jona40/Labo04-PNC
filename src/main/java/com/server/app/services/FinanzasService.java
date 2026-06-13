@@ -1,8 +1,8 @@
 package com.server.app.services;
 
 import com.server.app.entities.*;
-        import com.server.app.repositories.*;
-        import lombok.AllArgsConstructor;
+import com.server.app.repositories.*;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -25,8 +25,7 @@ public class FinanzasService {
                 .orElseThrow(() -> new RuntimeException("Cuenta origen no encontrada"));
         Cuenta destino = cuentaRepo.findById(destinoId)
                 .orElseThrow(() -> new RuntimeException("Cuenta destino no encontrada"));
-
-        if (!origen.getUsuario().getId().equals(user.getId())) {
+        if (origen.getUsuario().getId() != user.getId()) {
             throw new RuntimeException("No tienes permiso sobre esta cuenta");
         }
 

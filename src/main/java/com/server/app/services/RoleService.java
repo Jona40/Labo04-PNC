@@ -32,7 +32,7 @@ public class RoleService {
     }
 
     @Transactional
-    public Optional<Role> findById(Long id) {
+    public Optional<Role> findById(Integer id) {
         return roleRepository.findById(id);
     }
 
@@ -40,6 +40,8 @@ public class RoleService {
     public Role save(RoleDto dto) {
         Role role = new Role();
         role.setName(dto.getName());
+        role.setActive(true);
+
         if (dto.getPermissions() != null && !dto.getPermissions().isEmpty()) {
             List<Long> ids = dto.getPermissions()
                     .stream()
@@ -53,7 +55,7 @@ public class RoleService {
     }
 
     @Transactional
-    public Role update(Long id, RoleDto dto) {
+    public Role update(Integer id, RoleDto dto) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new NotFoundException("Role not found"));
         role.setName(dto.getName());
         if (dto.getPermissions() != null && !dto.getPermissions().isEmpty()) {
@@ -69,8 +71,7 @@ public class RoleService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Integer id) {
         roleRepository.deleteById(id);
     }
-
 }
